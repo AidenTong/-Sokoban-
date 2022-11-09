@@ -1,4 +1,4 @@
-# COMP 3021 Programming Assignment 2 (PA2) (Fall 2022)
+
 
 In this PA we are going to implement a graphical user
 interface ([GUI](https://en.wikipedia.org/wiki/Graphical_user_interface)) based,
@@ -24,29 +24,15 @@ cases if your code does not compile.
 
 In PA2, the reference implementation of PA1 will be provided and your tasks are basically to implement a GUI view of the
 game based on the skeleton code provided by us.
-The information provided in PA1 will not be repeated in this README. You may check out
-this [link](https://github.com/CastleLab/COMP3021-F22-PA-Student-Version/tree/PA1) if you want to revisit that.
 
-## Submission
 
-You should submit a single text file specified as follows:
-
-- A file named `<itsc-id>.txt` containing the URL of your private repository at the first line. We will ask you to add
-  the TAs' accounts as collaborators near the deadline.
-
-For example, a student CHAN, Tai Man with ITSC ID `tmchanaa` having a repository
-at `https://github.com/tai-man-chan/COMP3021-PA2` should submit a file named `tmchanaa.txt` with the following content:
-
-```text
-https://github.com/tai-man-chan/COMP3021-PA2
-```
 
 Note that we are using automatic scripts to process your submission.
 **DO NOT add extra explanation** to the file; otherwise they will prevent our scripts from correctly processing your
 submission.
 Feel free to email us if you need clarification.
 
-You need to submit the file to [CASS](https://cssystem.cse.ust.hk/UGuides/cass/index.html).
+You need to submit the file to 
 The deadline for this assignment is **November 13, 2022, 23:59:59** (inclusive).
 
 **We will grade your submission based on the latest committed version before the deadline.**
@@ -55,7 +41,7 @@ Please make sure all the amendments are made before the deadline and do not make
 ## Q&A
 
 Should you have any questions, please go
-to [Discussion](https://docs.github.com/en/discussions/quickstart#creating-a-new-discussion) of this repository to ask
+to discussion of this repository to ask
 and view other students' questions and answers.
 TAs will assist you there.
 **There is a FAQ pinned on the top.**
@@ -65,7 +51,7 @@ Be sure that you read it through before ask questions.
 
 The functionalities of PA2 are built on top of those in PA1.
 The main content of PA2 is to design and implement a GUI view of the game.
-All you need to implement are inside `hk.ust.comp3021.gui` package, while other sibling pacages are those you
+All you need to implement are inside `gui` package, while other sibling packages are those you
 implemented in PA1.
 Below are the requirements of the GUI view.
 
@@ -137,7 +123,7 @@ If any uncaught exception occurs during the demonstration, you will get 0 for th
 ## Reference Implementation
 
 We provide a demonstration of reference implementation of this assignment. 
-The demonstration video can be found on [YouTube](https://youtu.be/LiIyaaoaWxI).
+
 
 ### Download JavaFX
 
@@ -163,7 +149,4 @@ java --enable-preview -jar --module-path={path-to-javafx-sdk-<version>}/lib --ad
 We have pre-configured a gradle task to check style for you.
 You can run `gradle checkstyleMain` in the integrated terminal of IntelliJ to check style.
 
-## Academic Integrity
 
-We trust that you are familiar with Honor Code of HKUST. If not, refer to
-[this page](https://course.cse.ust.hk/comp3021/#honorcode).
