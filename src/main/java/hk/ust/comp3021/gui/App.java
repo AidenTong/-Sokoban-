@@ -12,7 +12,7 @@ import javafx.stage.Stage;
  */
 public class App extends Application {
     private Stage primaryStage;
-
+    int i = 0;
     /**
      * Set up the primary stage and show the {@link StartScene}.
      *
