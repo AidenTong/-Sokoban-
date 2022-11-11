@@ -1,8 +1,14 @@
 package hk.ust.comp3021.gui.component.board;
 
+import hk.ust.comp3021.entities.Box;
+import hk.ust.comp3021.entities.Empty;
+import hk.ust.comp3021.entities.Player;
+import hk.ust.comp3021.entities.Wall;
 import hk.ust.comp3021.game.GameState;
+import hk.ust.comp3021.game.Position;
 import hk.ust.comp3021.game.RenderingEngine;
 import hk.ust.comp3021.gui.utils.Message;
+import hk.ust.comp3021.gui.utils.Resource;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -10,8 +16,10 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 /**
  * Control logic for a {@link GameBoard}.
@@ -36,9 +44,58 @@ public class GameBoardController implements RenderingEngine, Initializable {
      */
     @Override
     public void render(@NotNull GameState state) {
-        // TODO
+        Platform.runLater(new Runnable() {
+            public void run() {
+                map.getChildren().removeAll();
+                for (int y = 0; y < state.getMapMaxHeight(); y++) {
+                    for (int x = 0; x < state.getMapMaxWidth(); x++) {
+                        final var entity = state.getEntity(Position.of(x, y));
+                        Cell cell= null;
+                        try {
+                            cell = new Cell();
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                        if(entity instanceof  Wall){
+                            cell.getController().setImage(Resource.getWallImageURL());
+                        } else if (entity instanceof Box) {
+                            Box b= (Box) entity;
+                            if(ifDestinations(x,y,state.getDestinations())){
+                                cell.getController().markAtDestination();
+                            }
+                            cell.getController().setImage(Resource.getBoxImageURL(b.getPlayerId()));
+                        }else if (entity instanceof Player) {
+                            Player p= (Player) entity;
+                            cell.getController().setImage(Resource.getPlayerImageURL(p.getId()));
+                        }else if (entity instanceof Empty) {
+                            cell.getController().setImage(Resource.getEmptyImageURL());
+                            if(ifDestinations(x,y,state.getDestinations())){
+                                cell.getController().setImage(Resource.getDestinationImageURL());
+                            }
+                        }
+                        map.add(cell,x,y);
+                    }
+                }
+                if(state.getUndoQuota().get()>=0){
+                    undoQuota.setText("Undo Quoto:"+state.getUndoQuota().get());
+                }else{
+                    undoQuota.setText("Undo Quoto:unlimited ");
+
+                }
+
+
+            }
+        });
     }
 
+    public boolean ifDestinations(int x,int y,Set<Position> destinations ){
+        for(Position pos:destinations){
+            if(x==pos.x()&&y==pos.y()){
+                return true;
+            }
+        }
+        return false;
+    }
     /**
      * Display a message via a dialog.
      *

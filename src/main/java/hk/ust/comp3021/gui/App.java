@@ -1,5 +1,7 @@
 package hk.ust.comp3021.gui;
 
+import hk.ust.comp3021.SokobanGameFactory;
+import hk.ust.comp3021.game.GameState;
 import hk.ust.comp3021.gui.component.maplist.MapEvent;
 import hk.ust.comp3021.gui.scene.game.ExitEvent;
 import hk.ust.comp3021.gui.scene.game.GameScene;
@@ -7,12 +9,16 @@ import hk.ust.comp3021.gui.scene.start.StartScene;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+
 /**
  * The JavaFX application that launches the game.
  */
 public class App extends Application {
     private Stage primaryStage;
-    int i = 0;
+    StartScene startScene;
+
+
     /**
      * Set up the primary stage and show the {@link StartScene}.
      *
@@ -26,10 +32,10 @@ public class App extends Application {
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
         primaryStage.setTitle("Sokoban Game - COMP3021 2022Fall");
-
-        // TODO
-
-
+        startScene=new StartScene();
+        startScene.getController().setApp(this);
+        primaryStage.setScene(startScene);
+        primaryStage.show();
 
     }
 
@@ -39,9 +45,13 @@ public class App extends Application {
      *
      * @param event The event data related to the map being opened.
      */
-    public void onOpenMap(MapEvent event) {
-        // TODO
+    public void onOpenMap(MapEvent event) throws IOException {
+
+        GameScene gameScene=new GameScene(new GameState(SokobanGameFactory.loadGameMap(event.getModel().file())));
+        gameScene.getController().setApp(this);
+        primaryStage.setScene(gameScene);
     }
+
 
     /**
      * Event handler for exiting the game.
@@ -49,7 +59,8 @@ public class App extends Application {
      *
      * @param event The event data related to exiting the game.
      */
-    public void onExitGame(ExitEvent event) {
-        // TODO
+    public void onExitGame(ExitEvent event) throws IOException {
+        primaryStage.setScene(startScene);
+
     }
 }

@@ -24,6 +24,7 @@ public class MapListCell extends ListCell<MapModel> {
                 setGraphic(node);
                 final var controller = loader.<MapListItemController>getController();
                 controller.getMapModelProperty().setValue(item);
+
             } catch (IOException e) {
                 throw new RuntimeException("Failed to load game map list item", e);
             }

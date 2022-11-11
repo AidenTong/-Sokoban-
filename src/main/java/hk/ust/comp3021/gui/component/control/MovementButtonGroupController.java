@@ -1,8 +1,11 @@
 package hk.ust.comp3021.gui.component.control;
 
+import hk.ust.comp3021.actions.Action;
+import hk.ust.comp3021.actions.Move;
 import hk.ust.comp3021.entities.Player;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 
@@ -21,6 +24,8 @@ public class MovementButtonGroupController implements Initializable {
 
     private Player player = null;
 
+
+    Action action;
     /**
      * Sets the player controller by the button group.
      *
@@ -36,31 +41,35 @@ public class MovementButtonGroupController implements Initializable {
      * @param url The URL.
      */
     public void setPlayerImage(URL url) {
-        // TODO
+        playerImage.setImage(new Image(url.toString()));
     }
 
     @FXML
     private void moveUp() {
-        // TODO
+       action = new Move.Up(player.getId());
     }
 
     @FXML
     private void moveDown() {
-        // TODO
+        action = new Move.Down(player.getId());
+
     }
 
     @FXML
     private void moveLeft() {
-        // TODO
+        action = new Move.Left(player.getId());
+
     }
 
     @FXML
     private void moveRight() {
-        // TODO
+        action = new Move.Right(player.getId());
+
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // TODO
+
     }
+
 }

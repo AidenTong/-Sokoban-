@@ -3,6 +3,7 @@ package hk.ust.comp3021.gui.component.board;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import org.jetbrains.annotations.NotNull;
 
@@ -29,7 +30,7 @@ public class CellController implements Initializable {
      * Should be called when the cell is one of the  destinations and there is a box.
      */
     public void markAtDestination() {
-        // TODO
+        mark.setText("√");
     }
 
     /**
@@ -38,6 +39,6 @@ public class CellController implements Initializable {
      * @param url The URL to the image.
      */
     public void setImage(@NotNull URL url) {
-        // TODO
+        image.setImage(new Image(url.toString()));
     }
 }

@@ -1,6 +1,7 @@
 package hk.ust.comp3021.gui.scene.game;
 
 import hk.ust.comp3021.game.GameState;
+import hk.ust.comp3021.gui.App;
 import hk.ust.comp3021.gui.component.board.GameBoard;
 import hk.ust.comp3021.gui.component.control.ControlPanel;
 import hk.ust.comp3021.gui.utils.Resource;
@@ -9,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.GridPane;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -28,6 +30,7 @@ public class GameSceneController implements Initializable {
 
     private GUISokobanGame game;
 
+    App app;
     /**
      * Initialize the controller as you need.
      *
@@ -38,7 +41,6 @@ public class GameSceneController implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // TODO
 
     }
 
@@ -57,6 +59,10 @@ public class GameSceneController implements Initializable {
         gameLoopThread.start();
     }
 
+    public void setApp(App app){
+        this.app=app;
+    }
+
     /**
      * Event handler when the exit button is clicked.
      * Fire {@link ExitEvent} so that {@link hk.ust.comp3021.gui.App} can handle it and switch to the start scene.
@@ -64,7 +70,10 @@ public class GameSceneController implements Initializable {
      * @param event The event data
      */
     @FXML
-    public void onExit(ActionEvent event) {
-        // TODO
+    public void onExit(ActionEvent event) throws IOException {
+
+        ExitEvent exitEvent=new ExitEvent();
+        app.onExitGame(exitEvent);
+
     }
 }
