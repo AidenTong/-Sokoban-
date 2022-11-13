@@ -69,7 +69,7 @@ public class MovementButtonGroupController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+      System.out.println("don't know what to do again......");
     }
 
 }

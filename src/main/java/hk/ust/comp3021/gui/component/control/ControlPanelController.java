@@ -25,10 +25,10 @@ import java.util.ResourceBundle;
 public class ControlPanelController implements Initializable, InputEngine {
     @FXML
     private FlowPane playerControls;
-
-    List<MovementButtonGroup> movementButtonGroupList=new ArrayList<>();
     List<Undo> undoList=new ArrayList<>();
-    int playId;
+    int playerId;
+    List<MovementButtonGroup> movementButtonGroupList=new ArrayList<>();
+
      volatile boolean undo=false;
     /**
      * Fetch the next action made by users.
@@ -38,28 +38,34 @@ public class ControlPanelController implements Initializable, InputEngine {
      */
     @Override
     public @NotNull Action fetchAction() {
-        while (!undo){
+        //todo
+        while (!undo) {
             for (int i = 0; i < movementButtonGroupList.size(); i++) {
-                if(movementButtonGroupList.get(i).getController().action!=null){
-                    playId=movementButtonGroupList.get(i).getController().action.getInitiator();
-                    undoList.add(new Undo(playId));
-                    if(movementButtonGroupList.get(i).getController().action instanceof Move.Down){
-                        movementButtonGroupList.get(i).getController().action=null;
-                        return new Move.Down(playId);
-                    }else if(movementButtonGroupList.get(i).getController().action instanceof Move.Up){
-                        movementButtonGroupList.get(i).getController().action=null;
-                        return new Move.Up(playId);
-                    }else if(movementButtonGroupList.get(i).getController().action instanceof Move.Left){
-                        movementButtonGroupList.get(i).getController().action=null;
-                        return new Move.Left(playId);
-                    }else if(movementButtonGroupList.get(i).getController().action instanceof Move.Right){
-                        movementButtonGroupList.get(i).getController().action=null;
-                        return new Move.Right(playId);
+                if (movementButtonGroupList.get(i).getController().action != null) {
+
+                    playerId = movementButtonGroupList.get(i).getController().action.getInitiator();
+
+                    undoList.add(new Undo(playerId));
+
+
+                    if (movementButtonGroupList.get(i).getController().action instanceof Move.Down) {
+                        movementButtonGroupList.get(i).getController().action = null;
+                        return new Move.Down(playerId);
+                    } else if (movementButtonGroupList.get(i).getController().action instanceof Move.Right) {
+                        movementButtonGroupList.get(i).getController().action = null;
+                        return new Move.Right(playerId);
+                    } else if (movementButtonGroupList.get(i).getController().action instanceof Move.Left) {
+                        movementButtonGroupList.get(i).getController().action = null;
+                        return new Move.Left(playerId);
+                    } else if (movementButtonGroupList.get(i).getController().action instanceof Move.Up) {
+                        movementButtonGroupList.get(i).getController().action = null;
+                        return new Move.Up(playerId);
                     }
                 }
             }
         }
         undo=false;
+
         if(undoList.size()>1){
             return undoList.remove(undoList.size()-1);
         }else{
@@ -100,11 +106,17 @@ public class ControlPanelController implements Initializable, InputEngine {
      */
     public void addPlayer(Player player, URL playerImageUrl) {
         try {
-            MovementButtonGroup movementButtonGroup =new MovementButtonGroup();
-            movementButtonGroup.getController().setPlayer(player);
-            movementButtonGroup.getController().setPlayerImage(playerImageUrl);
-            playerControls.getChildren().add(movementButtonGroup);
-            movementButtonGroupList.add(movementButtonGroup);
+
+            MovementButtonGroup g =new MovementButtonGroup();
+
+            g.getController().setPlayer(player);
+
+            g.getController().setPlayerImage(playerImageUrl);
+
+            playerControls.getChildren().add(g);
+
+            movementButtonGroupList.add(g);
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

@@ -44,47 +44,51 @@ public class GameBoardController implements RenderingEngine, Initializable {
      */
     @Override
     public void render(@NotNull GameState state) {
-        Platform.runLater(new Runnable() {
-            public void run() {
-                map.getChildren().removeAll();
-                for (int y = 0; y < state.getMapMaxHeight(); y++) {
-                    for (int x = 0; x < state.getMapMaxWidth(); x++) {
-                        final var entity = state.getEntity(Position.of(x, y));
-                        Cell cell= null;
-                        try {
-                            cell = new Cell();
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
-                        if(entity instanceof  Wall){
-                            cell.getController().setImage(Resource.getWallImageURL());
-                        } else if (entity instanceof Box) {
-                            Box b= (Box) entity;
-                            if(ifDestinations(x,y,state.getDestinations())){
-                                cell.getController().markAtDestination();
-                            }
-                            cell.getController().setImage(Resource.getBoxImageURL(b.getPlayerId()));
-                        }else if (entity instanceof Player) {
-                            Player p= (Player) entity;
-                            cell.getController().setImage(Resource.getPlayerImageURL(p.getId()));
-                        }else if (entity instanceof Empty) {
-                            cell.getController().setImage(Resource.getEmptyImageURL());
-                            if(ifDestinations(x,y,state.getDestinations())){
-                                cell.getController().setImage(Resource.getDestinationImageURL());
-                            }
-                        }
-                        map.add(cell,x,y);
+        //todo
+        Platform.runLater(() -> {
+            map.getChildren().removeAll();
+            for (int y = 0; y < state.getMapMaxHeight(); y++) {
+                for (int x = 0; x < state.getMapMaxWidth(); x++) {
+                    Cell cell;
+                    var entity = state.getEntity(Position.of(x, y));
+                    try {
+                        cell = new Cell();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
                     }
+                    if(entity instanceof Box){
+
+                        Box box= (Box) entity;
+
+                        if(ifDestinations(x,y,state.getDestinations())){
+                            cell.getController().markAtDestination();
+                        }
+                        cell.getController().setImage(Resource.getBoxImageURL(box.getPlayerId()));
+                    } else if (entity instanceof  Player) {
+                        Player player= (Player) entity;
+                        cell.getController().setImage(Resource.getPlayerImageURL(player.getId()));
+
+                    }else if (entity instanceof Wall) {
+                        cell.getController().setImage(Resource.getWallImageURL());
+                    }else if (entity instanceof Empty) {
+
+                        cell.getController().setImage(Resource.getEmptyImageURL());
+
+                        if(ifDestinations(x,y,state.getDestinations())){
+                            cell.getController().setImage(Resource.getDestinationImageURL());
+                        }
+
+                    }
+                    map.add(cell,x,y);
                 }
-                if(state.getUndoQuota().get()>=0){
-                    undoQuota.setText("Undo Quoto:"+state.getUndoQuota().get());
-                }else{
-                    undoQuota.setText("Undo Quoto:unlimited ");
-
-                }
-
-
             }
+
+            if (state.getUndoQuota().get() >= 0) {
+                undoQuota.setText("Undo Quota:" + state.getUndoQuota().get());
+            } else {
+                undoQuota.setText("Undo Quota:unlimited");
+            }
+
         });
     }
 

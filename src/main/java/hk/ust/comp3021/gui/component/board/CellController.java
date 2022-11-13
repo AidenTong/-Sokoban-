@@ -23,6 +23,7 @@ public class CellController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // TODO
+
     }
 
     /**
@@ -30,7 +31,9 @@ public class CellController implements Initializable {
      * Should be called when the cell is one of the  destinations and there is a box.
      */
     public void markAtDestination() {
+      //todo
         mark.setText("√");
+
     }
 
     /**
@@ -39,6 +42,7 @@ public class CellController implements Initializable {
      * @param url The URL to the image.
      */
     public void setImage(@NotNull URL url) {
+        //todo
         image.setImage(new Image(url.toString()));
     }
 }
